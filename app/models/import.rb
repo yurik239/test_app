@@ -78,7 +78,7 @@ class Import < ApplicationRecord
 					@err += '</br> Unknown supplier in lines ' + r_s
 				end
 				unless r_p.empty? 
-					@err += '</br> Wrong <price> format in lines ' + r_s
+					@err += '</br> Wrong <price> format in lines ' + r_p
 				end
 
 			rescue
