@@ -1,0 +1,12 @@
+
+	<%= simple_form_for(@import) do |f| %>
+	<div class="container-fluid">
+		  <%= f.input :datafile, as: :file %>
+	 </div> 
+	 <footer class="panel-footer">
+		  <div class="buttons-wrap">
+		  
+		  <%= f.button :submit, :class => "btn btn-success" %>
+		  </div>
+	</footer>
+	<% end %>

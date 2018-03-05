@@ -1,0 +1,61 @@
+<div class="panel-heading">
+	<div class="panel-heading font-bold">
+	
+		<ul class="importmenu">
+				<li class=""><%= link_to 'Import new file', new_import_path, :class => "menu-link", :id=>"import-new" %></li>
+				<li class="active"><%= link_to 'All imports', imports_path, :class => "menu-link", :id=>"import-alll" %></li>
+				
+				
+			</ul>
+	</div>
+	<div class="clearfix"></div>
+</div>
+<table class="table table-striped">
+	<thead>
+	<tr>
+		<th class="center">#</th>
+
+		<th class="center">Date</th>
+		<th class="center">File</th>
+		<th class="center">Result</th>
+		<th class="center">Errors</th>
+		<th class="center">Actions</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+  <% i=0 %>
+	<% @imports.each do |import| %>
+	<tr>
+		<td class="col-md-1 center">
+			<% i=i+1 %>
+			<%= i %>
+		</td>
+		<td class="col-md-2 center">
+			<%= import.created_at %>
+		</td>
+		<td class="col-md-2 center">
+			<%= import.filename %>
+		</td>
+		<td class="col-md-4 center">
+			<%= import.body %>
+		</td>
+		<td class="col-md-2 center">
+			<%= import.error %>
+		</td>
+  
+		<td class="col-md-1 center">
+			<%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, import_path(import), method: :delete, data: {confirm: 'Are You shure?'} %>
+		</td>
+		
+	</tr>
+
+	<% end %>
+	</tbody>
+	
+</table>
+<footer class="panel-footer">
+	<div class="buttons-wrap">
+	<%= link_to 'New Import', new_import_path, :class => "btn btn-success" %>
+	</div>
+</footer>

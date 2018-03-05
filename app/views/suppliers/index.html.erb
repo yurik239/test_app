@@ -1,0 +1,55 @@
+<% provide(:title, 'Suppliers') %>
+<div class="panel-heading">
+	<div class="panel-heading font-bold pull-left">Suppliers</div>
+	<div class="clearfix"></div>
+</div>
+<table class="table table-striped">
+	<thead>
+		<tr>
+		
+			<th>
+			<div class="paragraf">Code</div>
+			</th> 
+			
+			<th>Name</th>
+			
+			<th>Actions</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+	<% @suppliers.each do |s| %>
+		<tr>
+		
+			<td class="col-md-3">
+			  <div class="paragraf">
+					<%= s.sup_code %>
+			  </div>
+			</td>
+			
+			<td class="col-md-7">
+				<%= s.sup_name %>
+			</td>
+
+			<td class="col-md-2">
+			
+				<!-- <%= link_to '<i class="glyphicon glyphicon-eye-open"></i>'.html_safe, supplier_path(s) %> -->
+				
+				<%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_supplier_path(s) %>
+				<%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, supplier_path(s), method: :delete, data: {confirm: 'Are You shure?'} %>
+			</td>
+			
+		</tr>
+	<% end %>
+	</tbody>
+	
+	
+</table>
+
+
+<footer class="panel-footer">
+	<div class="buttons-wrap">
+		<%= link_to 'New Supplier', new_supplier_path, :class => "btn btn-success" %>
+	</div>
+	<%= paginate @suppliers %>
+</footer>

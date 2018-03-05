@@ -1,0 +1,15 @@
+<%= simple_form_for(@supplier) do |f| %> 
+<div class="container-fluid">
+  <%= f.error_notification %>
+
+  <%= f.input :sup_code %>
+
+  <%= f.input :sup_name %>
+
+</div>  
+<footer class="panel-footer">
+  <div class="buttons-wrap"> 
+    <%= f.button :submit, :class => "btn-success" %>
+  </div>
+</footer>  
+<% end %>

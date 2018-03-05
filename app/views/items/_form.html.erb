@@ -1,0 +1,24 @@
+<%= simple_form_for(@item) do |f| %> 
+<div class="container-fluid">
+  <%= f.error_notification %>
+
+  <%= f.input :sku %>
+
+  <%= f.input :sup_code, collection: @suppliers, as: :select, label: 'Supplier code' %>
+  <%= f.input :add1 %>
+  <%= f.input :add2 %>
+  <%= f.input :add3 %>
+  <%= f.input :add4 %>
+  <%= f.input :add5 %>
+  <%= f.input :add6 %>
+  
+
+  <%= f.input :price %>
+
+</div>  
+<footer class="panel-footer">
+  <div class="buttons-wrap"> 
+    <%= f.button :submit, :class => "btn-success" %>
+  </div>
+</footer>  
+<% end %>

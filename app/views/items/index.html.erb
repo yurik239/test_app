@@ -1,0 +1,73 @@
+<% provide(:title, 'Items') %>
+<div class="panel-heading">
+	<div class="panel-heading font-bold pull-left">Items</div>
+	<div class="clearfix"></div>
+</div>
+<table class="table table-striped">
+	<thead>
+		<tr>
+		
+			<th>
+			<div class="paragraf">SKU</div>
+			</th> 
+			<th>
+			<div class="paragraf">Supplier code</div>
+			</th>
+			<th>
+			<div class="paragraf">Supplier name</div>
+			</th>
+			<th>
+			<div class="paragraf">Price</div>
+			</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+	<% @items.each do |s| %>
+		<tr>
+		
+			<td class="col-md-2">
+				<div class="paragraf">
+					<%= s.sku %>
+				</div>
+			</td>
+			<td class="col-md-2">
+				<div class="paragraf">
+					<%= s.sup_code %>
+					
+				</div>
+			</td>
+			<td class="col-md-4">
+				<div class="paragraf">
+					<%= s.supplier_name %>
+				</div>
+			</td>
+			<td class="col-md-2">
+				<div class="paragraf">
+					<%= s.price %>
+				</div>
+			</td>
+			
+			<td class="col-md-2">
+			
+				<%= link_to '<i class="glyphicon glyphicon-eye-open"></i>'.html_safe, item_path(s) %>
+				
+				<%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_item_path(s) %>
+				<%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, item_path(s), method: :delete, data: {confirm: 'Are You shure?'} %>
+			</td>
+			
+		</tr>
+	<% end %>
+	</tbody>
+	
+	
+</table>
+
+
+<footer class="panel-footer">
+	<div class="buttons-wrap">
+		<%= link_to 'New Item', new_item_path, :class => "btn btn-success" %>
+	</div>
+	<%= paginate @items %>
+</footer>

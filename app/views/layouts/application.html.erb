@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= full_title(yield(:title)) %></title>
+    <%= csrf_meta_tags %>
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+	<!-- <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script> -->
+	
+  </head>
+
+  <body>
+	<aside class="side-nav">
+		<nav class="side-nav__navigation">
+			<a class="logo-link" id="company_logo_link">
+				<%= image_tag "inventory_logo_325x120.png", :class => "logo-img" %>
+			</a>
+			<ul class="side-nav__menu">
+				<li class="menu-li in-pink"><%= link_to '<i class="fa fa-truck"></i></br>Suppliers'.html_safe, suppliers_path, :class => "menu-link", :id=>"nav-suppliers" %></li>
+				<li class="menu-li in-yellow"><%= link_to '<i class="fa fa-th-list"></i></br>Items'.html_safe, items_path, :class => "menu-link", :id=>"nav-items" %></li>
+				<li class="menu-li in-green"><%= link_to '<i class="fa fa-exchange"></i></br>Import'.html_safe, new_import_path, :class => "menu-link", :id=>"nav-items" %></li>
+				
+			</ul>
+		</nav>
+		<div class="footer">
+  
+		</div>
+	</aside>
+	<div class="header" >
+		<div class="wrap">
+		</div>
+	</div>
+	<div class="main-wrapper-content">
+		<div class="wrapper-md">
+			<div class="panel panel-default">
+				<%= yield %>
+			<div>
+			<% flash.each do |name, message| %>
+			<div class="<%= name %>"><%= message %></div>
+			<% end %>
+		</div>
+	</div>
+  </body>
+</html>

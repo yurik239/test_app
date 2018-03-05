@@ -1,0 +1,14 @@
+
+<div class="panel-heading">
+	<div class="panel-heading font-bold">
+	
+	<ul class="importmenu">
+				<li class="active"><%= link_to 'Import new file', new_import_path, :class => "menu-link", :id=>"import-new" %></li>
+				<li class=""><%= link_to 'All imports', imports_path, :class => "menu-link", :id=>"import-alll" %></li>
+				
+				
+			</ul>
+	</div>
+	<div class="clearfix"></div>
+</div>
+<%= render 'form' %>
