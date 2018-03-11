@@ -5,9 +5,16 @@ class SuppliersController < ApplicationController
 	
 	def create
 	@supplier = Supplier.new(supplier_params)
-		if @supplier.save
-			redirect_to suppliers_path
+		if Resque.queue_sizes["default"] == 0
+			if @supplier.save
+				flash[:success] = "Supplier created"
+				redirect_to suppliers_path
+			else
+				flash[:danger] = "Ops ..."
+				render :new
+			end
 		else
+			flash[:danger] = "You can not create Supplier while qoing imports "
 			render :new
 		end
 	end
@@ -22,21 +29,35 @@ class SuppliersController < ApplicationController
 	
 	def update
 		find_supplier
-		if @supplier.update(supplier_params)
-			redirect_to suppliers_path
+		if Resque.queue_sizes["default"] == 0
+			if @supplier.update(supplier_params)
+				flash[:success] = "Supplier updated"
+				redirect_to suppliers_path
+			else
+				flash[:danger] = "Ops ..."
+				redirect_to suppliers_path, error: 'Ops..'
+			end
 		else
-			redirect_to suppliers_path, error: 'Ops..'
+			flash[:danger] = "You can not update Supplier while qoing imports "
+			redirect_to suppliers_path
 		end
 	end
 	
 	def destroy
 		find_supplier
 		@c = @supplier.sup_code
-		if @supplier.destroy
-			Item.where(:sup_code => @c).update_all(sup_code: '', supplier_id: nil)
-			redirect_to suppliers_path
+		if Resque.queue_sizes["default"] == 0
+			if @supplier.destroy
+				Item.where(:sup_code => @c).update_all(sup_code: '', supplier_id: nil)
+				flash[:success] = "Supplier delated"
+				redirect_to suppliers_path
+			else
+				flash[:danger] = "Ops ..."
+				redirect_to suppliers_path, error: 'Ops..'
+			end
 		else
-			redirect_to suppliers_path, error: 'Ops..'
+			flash[:danger] = "You can not delete Supplier while qoing imports "
+			redirect_to suppliers_path
 		end
 	end
 	

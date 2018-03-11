@@ -80,6 +80,16 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
+
+
+# REDIS for PROD
+
+  ENV["REDISTOGO_URL"] = 'redis://redistogo:yurik239@something.redistogo.com:1234/'
+
+  
+  
+  
+  
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter

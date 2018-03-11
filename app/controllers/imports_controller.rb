@@ -4,17 +4,19 @@ class ImportsController < ApplicationController
 	end
 	def create
 		@import = Import.new(import_params)
-	puts '111'
-	puts @import.datafile.url
+
 		if @import.save
-			@import.import_file
+			puts @import.id
+			ImportJob.perform_later @import.id
+			flash[:success] = "File #{@import.filename} will be imported on backend "
 			redirect_to imports_path
 		else
+			flash[:danger] = "Ops ..."
 			render :new
 		end
 	end
 	def index
-		@imports = Import.all.order(:created_at).page params[:page]
+		@imports = Import.all.order(id: :desc).page params[:page]
 	end
 	def destroy
 		find_import

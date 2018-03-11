@@ -117,16 +117,7 @@ li.in-green:hover {
     margin-bottom: 7px;
     font-size: 2rem;
 }
-.side-nav .menu-link {
-    display: block;
-    color: white;
-    font-weight: 700;
-    text-align: center;
-    text-transform: uppercase;
-    padding: 5px 3px 5px;
-    min-height: 45px;
-    font-size: 9px;
-}
+
 
 .fa {
 	font-size: 30px; !important

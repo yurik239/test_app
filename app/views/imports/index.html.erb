@@ -24,12 +24,12 @@
 	</thead>
 	
 	<tbody>
-  <% i=0 %>
+
 	<% @imports.each do |import| %>
 	<tr>
 		<td class="col-md-1 center">
-			<% i=i+1 %>
-			<%= i %>
+			
+			<%= import.id %>
 		</td>
 		<td class="col-md-2 center">
 			<%= import.created_at %>
@@ -38,7 +38,7 @@
 			<%= import.filename %>
 		</td>
 		<td class="col-md-4 center">
-			<%= import.body.html_safe %>
+			<%= import.body.html_safe unless import.body == nil %>
 		</td>
 		<td class="col-md-2 center">
 			<%= import.error %>
@@ -58,4 +58,5 @@
 	<div class="buttons-wrap">
 	<%= link_to 'New Import', new_import_path, :class => "btn btn-success" %>
 	</div>
+	<%= paginate @imports %>
 </footer>

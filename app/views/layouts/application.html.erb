@@ -6,7 +6,7 @@
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-	<!-- <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script> -->
+
 	
   </head>
 
@@ -35,10 +35,15 @@
 		<div class="wrapper-md">
 			<div class="panel panel-default">
 				<%= yield %>
-			<div>
-			<% flash.each do |name, message| %>
-			<div class="<%= name %>"><%= message %></div>
-			<% end %>
+			</div>
+			
+		</div>
+		<div class="message">
+		<% flash.each do |name, message| %>
+			<div class="alert-<%= name %> alert alert-dismissible" role="alert" id="m">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close" OnClick='m.classList.add("none")'><span aria-hidden="true">&times;</span></button>
+			<%= message %></div>
+		<% end %>
 		</div>
 	</div>
   </body>

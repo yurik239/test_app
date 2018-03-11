@@ -10,9 +10,16 @@ class ItemsController < ApplicationController
 	def create
 		@item = Item.new(item_params)
 		item_supplier
-		if @item.save
-			redirect_to items_path
+		if Resque.queue_sizes["default"] == 0
+			if @item.save
+				flash[:success] = "Item created"
+				redirect_to items_path
+			else
+				flash[:danger] = "Ops ..."
+				render :new
+			end
 		else
+			flash[:danger] = "Yuo can not create Item while qoing imports "
 			render :new
 		end
 	end
@@ -36,23 +43,36 @@ class ItemsController < ApplicationController
 	def update
 		find_item
 		
-		
-		if @item.update(item_params)
-			item_supplier
-			@item.save
-			redirect_to items_path
-		
+		if Resque.queue_sizes["default"] == 0
+			if @item.update(item_params)
+				item_supplier
+				@item.save
+				flash[:success] = "Item updated"
+				redirect_to items_path
+			
+			else
+				flash[:danger] = "Ops ..."
+				redirect_to items_path, error: 'Ops..'
+			end
 		else
-			redirect_to items_path, error: 'Ops..'
+			flash[:danger] = "You can not update Item while qoing imports "
+			redirect_to items_path
 		end
 	end
 	
 	def destroy
 		find_item
-		if @item.destroy
-			redirect_to items_path
+		if Resque.queue_sizes["default"] == 0
+			if @item.destroy
+				flash[:success] = "Item delated"
+				redirect_to items_path
+			else
+				flash[:danger] = "Ops ..."
+				redirect_to items_path, error: 'Ops..'
+			end
 		else
-			redirect_to items_path, error: 'Ops..'
+			flash[:danger] = "You can not delete Item while qoing imports "
+			redirect_to items_path
 		end
 	end
 	

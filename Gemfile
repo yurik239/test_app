@@ -53,7 +53,10 @@ gem 'carrierwave', '~> 1.0'
 gem 'activerecord-import', require: false
 
 # bulk insert/update
-gem 'postgres_upsert'
+gem 'postgres_upsert'  
+
+gem 'redis'
+gem 'resque', require: 'resque/server'
 
 gem 'bcrypt', '3.1.11', platforms: [:ruby, :x64_mingw]
 
