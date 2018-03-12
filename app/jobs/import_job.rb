@@ -16,19 +16,18 @@ class ImportJob < ApplicationJob
 		begin
 			imported = Import.find import_id
 			
-			@col_sep = "|"
-			@err=""
-			@ercount = 0
+			err=""
+			ercount = 0
 			if imported.filename.include? "supplier"
 				puts "SUPPLIER BEGIN #{imported.filename}"
 				begin
-					@res=PostgresUpsert.write Supplier, imported.lurl, :header => false, :columns => ["sup_code", "sup_name"], :unique_key => ["sup_code"], :delimiter => COL_SEP
-					@err = "New suppliers imported - #{@res.inserted}; Existed suppliers updated - #{@res.updated}" 
+					res=PostgresUpsert.write Supplier, imported.lurl, :header => false, :columns => ["sup_code", "sup_name"], :unique_key => ["sup_code"], :delimiter => COL_SEP
+					err = "New suppliers imported - #{res.inserted}; Existed suppliers updated - #{res.updated}" 
 
 				rescue
-					@err = "Can not read the file #{imported.filename} or file has wrong structure"
+					err = "Can not read the file #{imported.filename} or file has wrong structure"
 
-					@ercount = 999
+					ercount = 999
 				
 					
 				end
@@ -61,39 +60,39 @@ class ImportJob < ApplicationJob
 
 				#     unknown supplier
 								r_s += r_n.to_s + ", "
-								@ercount += 1
+								ercount += 1
 							end
 						
 						else
 				
 				#   wrong Price format
 							r_p += r_n.to_s + ", "
-							@ercount += 1
+							ercount += 1
 						end
 					end
 
 					i_io.rewind
-					@res = PostgresUpsert.write Item, i_io, :header => false, :columns => HEADERS_SKU_SID, :unique_key => ["sku"], :delimiter => COL_SEP
+					res = PostgresUpsert.write Item, i_io, :header => false, :columns => HEADERS_SKU_SID, :unique_key => ["sku"], :delimiter => COL_SEP
 					
-					@err += "New items imported - #{@res.inserted}; Existed items updated #{@res.updated}"
+					err += "New items imported - #{res.inserted}; Existed items updated #{res.updated}"
 					unless r_s.empty? 
-						@err += "</br> Unknown supplier in lines #{r_s}"
+						err += "</br> Unknown supplier in lines #{r_s}"
 					end
 					unless r_p.empty? 
-						@err += "</br> Wrong <price> format in lines #{r_p}"
+						err += "</br> Wrong <price> format in lines #{r_p}"
 					end
 					i_io.close
 				rescue
-					@err = "Can not read the file #{imported.filename} or file has wrong structure"
-					@ercount = 999
+					err = "Can not read the file #{imported.filename} or file has wrong structure"
+					ercount = 999
 
 				end
 			else
-				@err = "File #{imported.filename} has wrong name"
-				@ercount = 999
+				err = "File #{imported.filename} has wrong name"
+				ercount = 999
 				
 			end
-			imported.update(body: @err, error: @ercount)
+			imported.update(body: err, error: ercount)
 			puts "END"
 		
 		end
